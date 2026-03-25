@@ -1,0 +1,2 @@
+query,retrieval_time,llm_latency,total_time,prompt_tokens,completion_tokens,total_tokens,cost
+Within how many days must I claim my business reimbursements?,0.31923985481262207,5.260930776596069,5.580170631408691,990,154,1144,0.014520000000000002
