@@ -1,8 +1,19 @@
 import os
 import streamlit as st
-import time   # ✅ NEW
-import pandas as pd   # ✅ NEW
+import time   
+import pandas as pd  
 from rag_pipeline import load_vectorstore, retrieve_docs, generate_answer
+
+
+# Auto-create vectorstore if missing
+if not os.path.exists("vectorstore"):
+    from ingest_runner import load_documents, split_documents, create_vectorstore
+    
+    st.write(" Initializing knowledge base... Please wait ")
+    docs = load_documents("data")
+    chunks = split_documents(docs)
+    create_vectorstore(chunks)
+    st.write(" Knowledge base ready!")
 
 # ------------------------
 # Page Config
@@ -10,17 +21,17 @@ from rag_pipeline import load_vectorstore, retrieve_docs, generate_answer
 st.set_page_config(page_title="Onboarding Assistant", page_icon="logo.png", layout="wide")
 
 # ------------------------
-# 🔥 CUSTOM CSS (UI MAGIC)
+#  CUSTOM CSS (UI MAGIC)
 # ------------------------
 st.markdown("""
 <style>
 
-/* 🔥 Reduce top spacing */
+/*  Reduce top spacing */
 .block-container {
     padding-top: 2rem;
 }
 
-/* 🔥 HEADER CARD */
+/*  HEADER CARD */
 .custom-header {
     position: Sticky;
     max-width: 900px;
@@ -31,7 +42,7 @@ st.markdown("""
     box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
 }
 
-/* 🔥 HEADER TEXT */
+/*  HEADER TEXT */
 .header-text {
     font-size: 26px;
     font-weight: bold;
@@ -39,7 +50,7 @@ st.markdown("""
     text-align: center;
 }
 
-/* 🔥 TAGLINE */
+/*  TAGLINE */
 .tagline {
     position: Sticky;
     text-align: center;
@@ -49,18 +60,18 @@ st.markdown("""
     margin-bottom: 25px;
 }
 
-/* 🔥 SIDEBAR FIX */
+/*  SIDEBAR FIX */
 section[data-testid="stSidebar"] {
     min-width: 300px !important;
     max-width: 300px !important;
 }
 
-/* 🔥 LOGO ADJUST */
+/*  LOGO ADJUST */
 .logo-container img {
     margin-top: -15px !important;
 }
 
-/* 🔥 ABOUT TEXT */
+/*  ABOUT TEXT */
 .about-text {
     font-size: 12px;
     color: #666;
@@ -70,7 +81,7 @@ section[data-testid="stSidebar"] {
 """, unsafe_allow_html=True)
 
 # ------------------------
-# 🔥 HEADER SECTION
+#  HEADER SECTION
 # ------------------------
 st.markdown("""
 <div class="custom-header">
@@ -131,17 +142,17 @@ if query:
 
     with st.spinner("Thinking... 🤔"):
 
-        # ✅ Measure Retrieval Time
+        #  Measure Retrieval Time
         t1 = time.time()
         docs = retrieve_docs(query, db)
         retrieval_time = time.time() - t1
 
-        # ✅ LLM Call (UPDATED RETURN VALUES)
+        #  LLM Call (UPDATED RETURN VALUES)
         answer, llm_latency, pt, ct, tt = generate_answer(query, docs)
 
         total_time = retrieval_time + llm_latency
 
-        # ✅ Cost Calculation (EDIT if needed based on your model)
+        #  Cost Calculation (EDIT if needed based on your model)
         input_cost = (pt / 1000) * 0.01
         output_cost = (ct / 1000) * 0.03
         total_cost = input_cost + output_cost
@@ -151,7 +162,7 @@ if query:
     with st.chat_message("assistant"):
         st.markdown(answer)
 
-        # ✅ METRICS DISPLAY
+        #  METRICS DISPLAY
         st.markdown(f"""
 ---
 ### Metrics
@@ -167,7 +178,7 @@ if query:
 - Cost: ${total_cost:.6f}
 """)
 
-    # ✅ LOGGING
+    #  LOGGING
     log = pd.DataFrame([{
         "query": query,
         "retrieval_time": retrieval_time,

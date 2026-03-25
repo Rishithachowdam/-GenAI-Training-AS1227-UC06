@@ -12,23 +12,23 @@ AZURE_OPENAI_KEY = os.getenv("AZURE_OPENAI_KEY")
 AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
 DEPLOYMENT_NAME = os.getenv("AZURE_DEPLOYMENT_NAME")
 
-# ✅ Azure Client (FIRST)
+#  Azure Client (FIRST)
 client = AzureOpenAI(
     api_key=AZURE_OPENAI_KEY,
     api_version="2024-02-15-preview",
     azure_endpoint=AZURE_OPENAI_ENDPOINT
 )
 
-# ✅ LLM Wrapper (AFTER client)
+#  LLM Wrapper (AFTER client)
 llm = AzureLLM(client, DEPLOYMENT_NAME)
 
-# 🔹 Embeddings (HuggingFace)
+#  Embeddings (HuggingFace)
 def get_embeddings():
     return HuggingFaceEmbeddings(
         model_name="all-MiniLM-L6-v2"
     )
 
-# 🔹 Create Vector DB
+#  Create Vector DB
 def create_vectorstore(chunks):
     embeddings = get_embeddings()
 
@@ -40,7 +40,7 @@ def create_vectorstore(chunks):
 
     return db
 
-# 🔹 Load DB
+#  Load DB
 def load_vectorstore():
     embeddings = get_embeddings()
 
@@ -49,12 +49,12 @@ def load_vectorstore():
         embedding_function=embeddings
     )
 
-# 🔹 Retrieve Docs
+#  Retrieve Docs
 def retrieve_docs(query, db):
     retriever = db.as_retriever(search_kwargs={"k": 4})
     return retriever.invoke(query)
 
-# 🔹 Generate Answer (UPDATED)
+#  Generate Answer (UPDATED)
 def generate_answer(query, docs):
     context = ""
     sources = set()
@@ -77,7 +77,7 @@ Content:
 ---------------------
 """
 
-    # 🔗 Prepare unique links
+    #  Prepare unique links
     links_text = "\n".join([f"- {s}" for s in sources])
 
     prompt = f"""
@@ -132,7 +132,7 @@ Answer format:
 • Escalation/Contact:
 """
 
-    # ✅ ONLY ONE LLM CALL (Correct)
+    #  ONLY ONE LLM CALL (Correct)
     answer, latency, pt, ct, tt = llm.invoke(prompt)
 
     return answer, latency, pt, ct, tt

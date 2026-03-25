@@ -12,4 +12,4 @@ print(f"Created {len(chunks)} chunks")
 # Step 3: Create vector DB
 create_vectorstore(chunks)
 
-print("✅ Vector DB created successfully!")
+print(" Vector DB created successfully!")

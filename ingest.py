@@ -24,7 +24,7 @@ def load_documents(folder_path):
         path = os.path.join(folder_path, file)
         file_name = os.path.basename(path)
 
-        # 🔹 Handle PDFs
+        #  Handle PDFs
         if file.endswith(".pdf"):
             with pdfplumber.open(path) as pdf:
                 for i, page in enumerate(pdf.pages):
@@ -41,7 +41,7 @@ def load_documents(folder_path):
                             )
                         )
 
-        # 🔹 Handle TXT / MD
+        #  Handle TXT / MD
         elif file.endswith(".txt") or file.endswith(".md"):
             with open(path, "r", encoding="utf-8") as f:
                 text = f.read()

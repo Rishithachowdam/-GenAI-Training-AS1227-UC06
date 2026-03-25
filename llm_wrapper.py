@@ -19,7 +19,7 @@ class AzureLLM:
 
         content = response.choices[0].message.content
 
-        # ✅ Token usage
+        #  Token usage
         usage = response.usage
         prompt_tokens = usage.prompt_tokens
         completion_tokens = usage.completion_tokens
