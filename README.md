@@ -40,13 +40,13 @@ This solution is built using a RAG (Retrieval-Augmented Generation) pipeline:
       pip install -r requirements.txt
 
 - 3. Setup Environment Variables
-  Create a .env file in the root directory:
-    AZURE_OPENAI_KEY=your_api_key
-    AZURE_OPENAI_ENDPOINT=your_endpoint
-    AZURE_DEPLOYMENT_NAME=your_deployment_name
+  -- Create a .env file in the root directory:
+    --- AZURE_OPENAI_KEY=your_api_key
+    --- AZURE_OPENAI_ENDPOINT=your_endpoint
+    --- AZURE_DEPLOYMENT_NAME=your_deployment_name
 
 - 4.Add Documents
-  Place all policy documents inside the data/ folder.
+  -- Place all policy documents inside the data/ folder.
 
 - 5. Create Vector Database
    ```bash
