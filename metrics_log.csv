@@ -1,0 +1,3 @@
+query,retrieval_time,llm_latency,total_time,prompt_tokens,completion_tokens,total_tokens,cost
+hi,0.18998026847839355,2.4734129905700684,2.663393259048462,681,13,694,0.007200000000000001
+Who should I contact for queries about reimbursement payment timelines?,0.04405069351196289,3.312013626098633,3.3560643196105957,982,173,1155,0.015009999999999999
