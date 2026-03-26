@@ -6,7 +6,7 @@ from rag_pipeline import load_vectorstore, retrieve_docs, generate_answer
 
 
 # Auto-create vectorstore if missing
-if not os.path.exists("vectorstore"):
+if not os.path.exists("/tmp/vectorstore"):
     from ingest_runner import load_documents, split_documents, create_vectorstore
     
     st.write(" Initializing knowledge base... Please wait ")

@@ -35,7 +35,7 @@ def create_vectorstore(chunks):
     db = Chroma.from_documents(
         documents=chunks,
         embedding=embeddings,
-        persist_directory="vectorstore"
+        persist_directory="/tmp/vectorstore"
     )
 
     return db
@@ -45,7 +45,7 @@ def load_vectorstore():
     embeddings = get_embeddings()
 
     return Chroma(
-        persist_directory="vectorstore",
+        persist_directory="/tmp/vectorstore",
         embedding_function=embeddings
     )
 
